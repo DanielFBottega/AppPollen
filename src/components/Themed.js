@@ -19,13 +19,14 @@ const colors = {
 
 import PropTypes from 'prop-types';
 
-export const GradientBackground = forwardRef(({ children, style }, ref) => {
+export const GradientBackground = forwardRef(({ children, style, onPressOut }, ref) => {
   return (
     <LinearGradient
       start={[0, 0]}
       end={[1, 1]}
       colors={[colors.primary, colors.secondary]}
       style={style}
+      onPressOut={onPressOut}
       ref={ref} // Passe a referência para o elemento
     >
       {children}
@@ -36,24 +37,10 @@ export const GradientBackground = forwardRef(({ children, style }, ref) => {
 GradientBackground.propTypes = {
   children: PropTypes.node.isRequired,
   style: PropTypes.object,
+  onPressOut: PropTypes.func,
 };
 
-// export const Button = forwardRef(({ children, style, onPress }, ref) => {
-//   return (
-//       <CButton
-//         style={styles.button}
-//         onPress={onPress}
-//       >
-//           <Text>{children}</Text>
-//       </CButton>
-//   );
-// });
 
-// Button.propTypes = {
-//   children: PropTypes.node.isRequired,
-//   style: PropTypes.object,
-//   onPress: PropTypes.func,
-// };
 const ButtonContext = createStyledContext({
   size: '$md',
 });

@@ -5,18 +5,19 @@ import {
   Image,
   Avatar,
   View,
-  ScrollView
+  ScrollView,
+  Anchor
 } from 'tamagui';
 import * as Linking from 'expo-linking';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 import Calendarstrip from '@components/calendarStrip.js';
-
+import LateralMenu from '@components/lateralMenu.js';
 
 
 export default function Home() {
-  const nome = 'Pedrinho Matador';
-  const empresa = 'PCC';
+  const nome = 'Reginaldo Cigarro';
+  const empresa = 'MarkHouse';
   const [events, setEvents] = useState([])
 
   //setar eventos fake aqui
@@ -47,9 +48,7 @@ export default function Home() {
       showsVerticalScrollIndicator={false}
     >
       {/* inicio cabeçalho */}
-      <YStack>
-        <Image source={require('@assets/List.svg')} />
-      </YStack>
+      <LateralMenu />
       <YStack
       marginTop={10}
       >
@@ -168,10 +167,14 @@ export default function Home() {
           alignItems='center'
         >
           <Text>Agenda</Text>
-          <Text
+          <Anchor
           color={'#08A647'}
           fontSize={12}
-          >Ver tudo</Text>
+          onPress={() =>  {
+            Linking.openURL('/agenda');
+          }
+          }
+          >Ver tudo</Anchor>
         </XStack>
         <Calendarstrip events={events}/>
       </YStack>
@@ -193,6 +196,7 @@ export default function Home() {
           marginTop={10}
           padding={10}
           {...events.length ? {backgroundColor: 'white'} : null}
+          borderRadius={10}
           height={100}
         >
           {/* mostrar o primeiro evento aqui */}
@@ -232,33 +236,45 @@ export default function Home() {
         <View
           marginTop={10}
           padding={10}
-          {...events.length ? {backgroundColor: 'white'} : null}
           height={100}
         >
-          {/* mostrar o primeiro evento aqui */}
           {
             events.length ? (
-              <YStack>
-                  <Text
-                  fontFamily={'InterBold'}
-                  fontSize={16}
-                  >{events[0].title}</Text>
+              <XStack
+                backgroundColor={'white'}
+                borderRadius={10}
+                width={'103%'}
+              >
+                <View
+                  marginRight={10}
+                >
+                  <Image
+                  src="http://placekitten.com/300/300"
+                  width={100}
+                  height={100}
+                  borderRadius={10}
+                  />
+                </View>
+                <YStack
+                  justifyContent='space-around'
+                >
                   <Text
                   fontFamily={'InterThin'}
                   fontSize={12}
                   marginTop={10}
                   >{events[0].description}</Text>
-                  <Text
-                  fontFamily={'InterThin'}
-                  fontSize={12}
-                  marginTop={10}
-                  >{events[0].start} às {events[0].end}</Text>
-                  <Text
-                  fontFamily={'InterThin'}
-                  fontSize={12}
-                  marginTop={10}
-                  >{events[0].location}</Text>
-              </YStack>
+                  {/* link com texto confia a materia */}
+                  <Anchor
+                  href={'/noticias'}
+                  >
+                    <Text
+                    fontFamily={'InterThin'}
+                    fontSize={12}
+                    marginTop={10}
+                    >Confira a matéria</Text>
+                  </Anchor>
+                </YStack>
+              </XStack>
             ) : null
           }
         </View>

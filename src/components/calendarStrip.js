@@ -20,11 +20,13 @@ export default function Calendarstrip({events}) {
             style={{
                 padding: 15,
                 backgroundColor: 'white',
+                borderRadius: 10,
 
             }}
             scrollable
             startingDate={new Date()}
             selectedDate={new Date()}
+            //bloquear seleção de datas
             showMonth={false}
             showMonthArrow={false}
             iconLeftStyle={{

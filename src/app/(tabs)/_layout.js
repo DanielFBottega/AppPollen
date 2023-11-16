@@ -25,6 +25,7 @@ const AppNavigator = () => {
           sceneContainerStyle={{
             backgroundColor: 'transparent',
             margin: 10,
+            marginBottom: 60,
           }}
           >
           <Tabs.Screen
