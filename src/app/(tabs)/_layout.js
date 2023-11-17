@@ -89,6 +89,12 @@ const AppNavigator = () => {
               />
             ),
           }} />
+          <Tabs.Screen
+          name="agenda/index"
+          options={{
+            tabBarButton: () => null,
+          }}
+          />
         </Tabs>
   );
 };

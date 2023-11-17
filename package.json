@@ -17,6 +17,7 @@
     "@tamagui/config": "^1.76.0",
     "@tamagui/font-inter": "^1.76.0",
     "@tamagui/linear-gradient": "^1.76.0",
+    "@tamagui/lucide-icons": "^1.76.0",
     "@tamagui/theme-base": "^1.76.0",
     "@types/react": "~18.2.14",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",

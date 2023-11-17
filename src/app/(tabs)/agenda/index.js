@@ -13,11 +13,11 @@ import {
   import moment from 'moment';
   import Calendar from '@components/calendar.js';
   import LateralMenu from '@components/lateralMenu.js';
-
-  export default function Home() {
+  import { ModalConfig } from '@components/agendaConfig.js';
+  export default function Agenda() {
     const [events, setEvents] = useState([])
-  
-    //setar eventos fake aqui
+
+    //setar eventos fake
     useEffect(() => {
         const eventos = []
         for(let i = 0; i < 5; i++){
@@ -34,7 +34,20 @@ import {
                         color: 'darkgreen',
                         key: date
                     }]
-                })
+                },
+                {
+                    date: date,
+                    start: '14:00',
+                    end: '18:00',
+                    title: 'Evento ' + i + ' parte 2',
+                    description: 'Descrição do evento',
+                    location: 'Local do evento',
+                    dots: [{
+                        color: 'darkgreen',
+                        key: date
+                    }]
+                }
+                )
             }
         }
         setEvents(eventos)
@@ -45,7 +58,12 @@ import {
         showsVerticalScrollIndicator={false}
       >
         {/* inicio cabeçalho */}
-        <LateralMenu />
+        <XStack
+          justifyContent='space-between'
+        >
+          <LateralMenu />
+          <ModalConfig />
+        </XStack>
         <YStack
         marginTop={10}
         >
@@ -53,7 +71,7 @@ import {
             justifyContent='space-between'
           >
             <YStack>
-              <Text 
+              <Text
                 fontSize={24}
               >Agenda</Text>
             </YStack>
@@ -68,55 +86,6 @@ import {
             <Calendar events={events}/>
         </YStack>
         {/* fim agenda */}
-        {/* inicio eventos */}
-        <YStack
-        marginTop={20}
-        >
-          <Text>Agenda do dia</Text>
-          <Text
-           fontFamily={'InterThin'}
-           marginTop={5}
-           >
-            {
-              events.length ? moment(events[0].date).locale('pt-br').format('DD [de] MMMM') : 'Nenhum evento próximo'
-            }
-          </Text>
-          <View
-            marginTop={10}
-            padding={10}
-            {...events.length ? {backgroundColor: 'white'} : null}
-            borderRadius={10}
-            height={100}
-          >
-            {/* mostrar o primeiro evento aqui */}
-            {
-              events.length ? (
-                <YStack>
-                    <Text
-                    fontFamily={'InterBold'}
-                    fontSize={16}
-                    >{events[0].title}</Text>
-                    <Text
-                    fontFamily={'InterThin'}
-                    fontSize={12}
-                    marginTop={10}
-                    >{events[0].description}</Text>
-                    <Text
-                    fontFamily={'InterThin'}
-                    fontSize={12}
-                    marginTop={10}
-                    >{events[0].start} às {events[0].end}</Text>
-                    <Text
-                    fontFamily={'InterThin'}
-                    fontSize={12}
-                    marginTop={10}
-                    >{events[0].location}</Text>
-                </YStack>
-              ) : null
-            }
-          </View>
-        </YStack>
-        {/* fim eventos */}
       </ScrollView>
     );
   }
