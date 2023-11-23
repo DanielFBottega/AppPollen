@@ -2,18 +2,11 @@ import {
     XStack,
     YStack,
     Text,
-    Image,
-    Avatar,
-    View,
     ScrollView,
-    Anchor
   } from 'tamagui';
-  import * as Linking from 'expo-linking';
   import { useState, useEffect } from 'react';
   import moment from 'moment';
   import Calendar from '@components/calendar.js';
-  import LateralMenu from '@components/lateralMenu.js';
-  import { ModalConfig } from '@components/agendaConfig.js';
   export default function Agenda() {
     const [events, setEvents] = useState([])
 
@@ -52,18 +45,11 @@ import {
         }
         setEvents(eventos)
     },[])
-  
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
         {/* inicio cabeçalho */}
-        <XStack
-          justifyContent='space-between'
-        >
-          <LateralMenu />
-          <ModalConfig />
-        </XStack>
         <YStack
         marginTop={10}
         >

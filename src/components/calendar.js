@@ -1,5 +1,5 @@
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import PropTypes from 'prop-types';
@@ -57,24 +57,54 @@ LocaleConfig.locales['pt-br'] = {
 LocaleConfig.defaultLocale = 'pt-br';
 export default function Calendarstrip({events}) {
     const [selected, setSelected] = useState(moment().format('YYYY-MM-DD'));
+    //separar eventos por categoria de horas por exemplo se um evento comçea as 8 e termina as 10, ele pertence a categoria 8horas e a categoria 9horas mas se ele começa as 8 e termina as 9 ele pertence apenas a categoria 8horas
+    const [eventsByHour, setEventsByHour] = useState([])
+    useEffect(() => {
+        const eventsByHour = []
+        for(let i = 0; i < 24; i++){
+            eventsByHour.push({
+                hour: i,
+                events: []
+            })
+        }
+        events.forEach((event) => {
+            const start = parseInt(event.start.split(':')[0])
+            const end = parseInt(event.end.split(':')[0])
+            for(let i = start; i <= end; i++){
+                eventsByHour[i].events.push(event)
+            }
+        })
+        setEventsByHour(eventsByHour)
+    }, [events])
+    console.log(eventsByHour)
+
     return (
         <YStack>
             <Calendar
                 theme={{
                     textMonthFontSize: 20,
                     textMonthFontFamily: 'Inter',
-                    selectedDayTextColor: '#FFF',
-                    selectedDayBackgroundColor: '#08A647',
+                    todayBackgroundColor: '#08A647',
+                    todayTextColor: '#FFF',
                 }}
                 onDayPress={(day) => {
                     setSelected(day.dateString);
                 }}
                 markedDates={{
                     [selected]: {
-                        selected: true,
-                        disableTouchEvent: true,
+                        textColor: '#08A647',
                     },
+                    ...events.reduce((obj, event) => {
+                        obj[event.date] = {
+                            selected: true,
+                            marked: true,
+                            selectedDotColor: '#08A647',
+                            selectedColor: '#ACCF80',
+                        }
+                        return obj;
+                    }, {})
                 }}
+
             />
             <YStack
                 marginTop={20}

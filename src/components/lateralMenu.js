@@ -1,91 +1,201 @@
-import { YStack, Image, XStack, Text } from 'tamagui';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import React, { useState } from 'react';
+import {TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, YStack, XStack, Avatar } from 'tamagui';
 import { GradientBackground } from './Themed';
-import { useState } from 'react';
-import Home from '@app/(tabs)/home';
-import Reuniao from '@app/(tabs)/reuniao';
+import { useNavigation } from '@react-navigation/native';
 
-const Drawer = createDrawerNavigator();
-export default function LateralMenu() {
-    const [menu, setMenu] = useState(false);
+const LateralMenu = ({props}) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigation = useNavigation();
+  const nome = 'Reginaldo Cigarro';
+  const empresa = 'MarkHouse';
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const navigateTo = (screen) => {
+    navigation.navigate(screen);
+    closeMenu();
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
-      <YStack>
-        <Image source={require('@assets/List.svg')}
-            onPress={() => {
-                setMenu(!menu);
-            }
-            }
-        />
-        <GradientBackground
-            style={{
+    <View>
+      <TouchableOpacity onPress={toggleMenu}>
+        <Image source={require('@assets/List.svg')} />
+      </TouchableOpacity>
+
+      {/* Menu lateral que se sobreporá à tela */}
+      {isMenuOpen && (
+        <TouchableWithoutFeedback onPress={closeMenu}>
+        <View
+          style={{
+            position: 'absolute',
+            top: -10,
+            left: -10,
+            width: '110%',
+            height: 1000,
+            backgroundColor: 'RGBA(0,0,0,0.5)',
+            zIndex: 999,
+            display: 'flex',
+            justifyContent: 'flex-start',
+          }}
+        >
+            {/* Links para outras telas */}
+            <GradientBackground
+              style={{
                 width: '50%',
-                height: '100vh',
-                position: 'absolute',
-                zIndex: 1000,
-                top: 0,
-                left: 0,
-                display: menu ? 'flex' : 'none',
-            }}
-            onPressOut={() => {
-                setMenu(!menu);
-            }}
-        >
-        <YStack
-        >
-            <XStack>
-                <Image source={require('@assets/Reunião.svg')} 
-                    tintColor={'#FFF'}
-                />
-                <Text>Salas de Reunião</Text>
-            </XStack>
-        </YStack>
-        </GradientBackground>
-      </YStack>
-  );
-}
-
-
-function Menu() {
-    return (
-        <NavigationContainer>
-            <Drawer.Navigator
-                initialRouteName="Home"
-                drawerContent={props => <CustomDrawerContent {...props} />}
-                drawerStyle={{
-                    backgroundColor: '#333',
-                    paddingVertical: 20,
-                }}
-                drawerContentOptions={{
-                    labelStyle: {
-                        fontWeight: 'bold',
-                    },
-                    activeTintColor: '#7cc',
-                    activeBackgroundColor: 'transparent',
-                    inactiveTintColor: '#ccc',
-                    itemStyle: {
-                        marginVertical: 5,
-                    },
-                }}
+               }}
             >
-                <Drawer.Screen
-                    name="Início"
-                    component={Home}
-                    options={{
-                        drawerLabel: (({ focused }) => <Text style={{ color: focused ? '#7cc' : '#ccc' }}>Início</Text>),
-                        drawerIcon: (({ focused }) => <Icon name="home" size={20} color={focused ? '#7cc' : '#ccc'} />)
-                    }}
+            <YStack
+              padding={20}
+              justifyContent='center'
+              alignItems='center'
+            >
+              <Avatar circular size="$8"
+              borderWidth={3}
+              borderColor={'#08A647'}
+              >
+                <Avatar.Image src="http://placekitten.com/500/500" />
+                <Avatar.Fallback bc={'#08A647'} />
+              </Avatar>
+              <Text
+                color={'white'}
+                fontFamily={'Inter'}
+                marginTop={10}
+              >{nome}</Text>
+              <Text
+                color={'white'}
+                fontFamily={'InterThin'}
+                marginTop={5}
+              >{empresa}</Text>
+            </YStack>
+            <YStack padding={10} gap={15}>
+              <TouchableOpacity
+                onPress={() => navigateTo('home/index')}
+              >
+                <XStack>
+                <Image
+                  src={require('@assets/House.svg')}
+                  tintColor='white'
                 />
-                <Drawer.Screen
-                    name="Salas de Reunião"
-                    component={Reuniao}
-                    options={{
-                        drawerLabel: (({ focused }) => <Text style={{ color: focused ? '#7cc' : '#ccc' }}>Salas de Reunião</Text>),
-                        drawerIcon: (({ focused }) => <Icon name="home" size={20} color={focused ? '#7cc' : '#ccc'} />)
-                    }}
+                <Text
+                  alignSelf='center'
+                  color={'white'}
+                  fontFamily={'InterThin'}
+                  marginLeft={5}
+                >Início</Text>
+                </XStack>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigateTo('agenda/index')}
+              >
+                <XStack>
+                <Image
+                  src={require('@assets/Calendar.svg')}
+                  tintColor='white'
                 />
-            </Drawer.Navigator>
-        </NavigationContainer>
-    );
-}
+                <Text
+                  alignSelf='center'
+                  color={'white'}
+                  fontFamily={'InterThin'}
+                  marginLeft={5}
+                >Agenda</Text>
+                </XStack>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigateTo('reuniao/index')}
+              >
+                <XStack>
+                <Image
+                  src={require('@assets/Reunião.svg')}
+                  tintColor='white'
+                />
+                <Text
+                  alignSelf='center'
+                  color={'white'}
+                  fontFamily={'InterThin'}
+                  marginLeft={5}
+                >Salas de Reuniao</Text>
+                </XStack>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigateTo('noticias/index')}
+              >
+                <XStack>
+                <Image
+                  src={require('@assets/News.svg')}
+                  tintColor='white'
+                />
+                <Text
+                  alignSelf='center'
+                  color={'white'}
+                  fontFamily={'InterThin'}
+                  marginLeft={5}
+                >Notícias</Text>
+                </XStack>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigateTo('configuracao/index')}
+              >
+                <XStack>
+                <Image
+                  src={require('@assets/Settings.svg')}
+                  tintColor='white'
+                />
+                <Text
+                  alignSelf='center'
+                  color={'white'}
+                  fontFamily={'InterThin'}
+                  marginLeft={5}
+                >Configurações</Text>
+                </XStack>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigateTo('termos/index')}
+              >
+                <XStack>
+                <Image
+                  src={require('@assets/House.svg')}
+                  tintColor='white'
+                />
+                <Text
+                  alignSelf='center'
+                  color={'white'}
+                  fontFamily={'InterThin'}
+                  marginLeft={5}
+                >Termos de uso</Text>
+                </XStack>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigateTo('/')}
+              >
+                <XStack>
+                <Image
+                  src={require('@assets/House.svg')}
+                  tintColor='white'
+                />
+                <Text
+                  alignSelf='center'
+                  color={'white'}
+                  fontFamily={'InterThin'}
+                  marginLeft={5}
+                >Sair</Text>
+                </XStack>
+              </TouchableOpacity>
+
+              {/* Adicione mais links conforme necessário */}
+            </YStack>
+            </GradientBackground>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
+    </View>
+  );
+};
+
+export default LateralMenu;

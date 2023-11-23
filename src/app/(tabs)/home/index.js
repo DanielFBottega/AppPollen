@@ -12,7 +12,6 @@ import * as Linking from 'expo-linking';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 import Calendarstrip from '@components/calendarStrip.js';
-import LateralMenu from '@components/lateralMenu.js';
 
 
 export default function Home() {
@@ -48,7 +47,6 @@ export default function Home() {
       showsVerticalScrollIndicator={false}
     >
       {/* inicio cabeçalho */}
-      <LateralMenu />
       <YStack
       marginTop={10}
       >
@@ -57,7 +55,8 @@ export default function Home() {
         >
           <YStack>
             <Text
-            fontFamily={'InterBold'}
+            fontFamily={'Inter'}
+            fontSize={22}
             >Olá, {nome}</Text>
             <Text
             fontFamily={'InterThin'}

@@ -12,7 +12,7 @@ import {
   import { Check as CheckIcon, X } from '@tamagui/lucide-icons'
   import {Modal, StyleSheet} from 'react-native'
 
-export function ModalConfig() {
+export default function ModalConfig() {
     const [open, setOpen] = useState(false)
 
     return(
@@ -23,136 +23,133 @@ export function ModalConfig() {
                 animationType='slide'
                 transparent={true}
                 onRequestClose={() => setOpen(false)}
+
             >
-        <View
-            f={1}
-            justifyContent='center'
-            alignItems='center'
-        >
-          <View
-            backgroundColor={'white'}
-            padding={20}
-            width={200}
-            borderRadius={20}
-            borderColor={'#08A647'}
-            borderWidth={1}
-            shadowColor={'#000'}
-            shadowOffset={{
-                width: 0,
-                height: 4,
-            }}
-            shadowOpacity={0.25}
-            shadowRadius={4}
-
-          >
-            <YStack>
-                <XStack
-                    width={200}
+                <View
+                    f={1}
+                    justifyContent='center'
+                    alignItems='center'
                 >
-                    <Text
-                        color={'black'}
-                        flex={1}
-                        justifyContent='center'
-                        alignContent='center'
-                    >Preferências</Text>
-                    <Button
-                        size='$1'
-                        //sem background
-                        backgroundColor={'transparent'}
-                        onPress={() => setOpen(false)}
-                    >
-                        <X
-                            color={'#000'}
-                        />
-                    </Button>
-                </XStack>
-                <XStack>
-                    <Checkbox
-                        id='checkbox'
-                    >
-                        <Checkbox.Indicator>
-                            <CheckIcon />
-                        </Checkbox.Indicator>
-                    </Checkbox>
-                    <Label htmlFor='checkbox'
-                        color={'#000'}
-                    >Checkbox</Label>
-                </XStack>
-                <XStack>
-                    <Checkbox
-                        id='checkbox'
-                    >
-                        <Checkbox.Indicator>
-                            <CheckIcon />
-                        </Checkbox.Indicator>
-                    </Checkbox>
-                    <Label htmlFor='checkbox'
-                        color={'#000'}
-                    >Checkbox</Label>
-                </XStack>
-                <XStack>
-                    <Checkbox
-                        id='checkbox'
-                    >
-                        <Checkbox.Indicator>
-                            <CheckIcon />
-                        </Checkbox.Indicator>
-                    </Checkbox>
-                    <Label htmlFor='checkbox'
-                        color={'#000'}
-                    >Checkbox</Label>
-                </XStack>
-                <XStack>
-                    <Checkbox
-                        id='checkbox'
-                    >
-                        <Checkbox.Indicator>
-                            <CheckIcon />
-                        </Checkbox.Indicator>
-                    </Checkbox>
-                    <Label htmlFor='checkbox'
-                        color={'#000'}
-                    >Checkbox</Label>
-                </XStack>
-            </YStack>
-
-          </View>
-        </View>
+                  <View
+                    backgroundColor={'white'}
+                    padding={10}
+                    width={200}
+                    borderRadius={20}
+                    borderColor={'#08A647'}
+                    borderWidth={1}
+                    shadowColor={'#000'}
+                    shadowOffset={{
+                        width: 0,
+                        height: 4,
+                    }}
+                    shadowOpacity={0.25}
+                    shadowRadius={4}
+                  >
+                    <YStack>
+                        <XStack
+                            width={200}
+                            marginBottom={20}
+                        >
+                            <Text
+                                color={'black'}
+                                f={1}
+                                display='flex'
+                                justifyContent='center'
+                                alignContent='center'
+                                fontFamily={'Inter'}
+                            >Preferências</Text>
+                            <Button
+                                size='$1'
+                                //sem background
+                                backgroundColor={'transparent'}
+                                onPress={() => setOpen(false)}
+                            >
+                                <X
+                                    color={'#ACCF80'}
+                                />
+                            </Button>
+                        </XStack>
+                        <XStack>
+                            <Checkbox
+                                id='checkbox'
+                                style={styles.checkbox}
+                            >
+                                <Checkbox.Indicator>
+                                    <CheckIcon
+                                        style={styles.icon}
+                                    />
+                                </Checkbox.Indicator>
+                            </Checkbox>
+                            <Label htmlFor='checkbox'
+                                color={'#000'}
+                            >Eventos</Label>
+                        </XStack>
+                        <XStack>
+                            <Checkbox
+                                id='checkbox'
+                                style={styles.checkbox}
+                            >
+                                <Checkbox.Indicator>
+                                    <CheckIcon 
+                                        style={styles.icon}
+                                    />
+                                </Checkbox.Indicator>
+                            </Checkbox>
+                            <Label htmlFor='checkbox'
+                                color={'#000'}
+                            >Visitas</Label>
+                        </XStack>
+                        <XStack>
+                            <Checkbox
+                                id='checkbox'
+                                style={styles.checkbox}
+                            >
+                                <Checkbox.Indicator>
+                                    <CheckIcon 
+                                        style={styles.icon}
+                                    />
+                                </Checkbox.Indicator>
+                            </Checkbox>
+                            <Label htmlFor='checkbox'
+                                color={'#000'}
+                            >Salas de Reunião</Label>
+                        </XStack>
+                        <XStack>
+                            <Checkbox
+                                id='checkbox'
+                                style={styles.checkbox}
+                            >
+                                <Checkbox.Indicator>
+                                    <CheckIcon 
+                                        style={styles.icon}
+                                    />
+                                </Checkbox.Indicator>
+                            </Checkbox>
+                            <Label htmlFor='checkbox'
+                                color={'#000'}
+                            >Editais</Label>
+                        </XStack>
+                    </YStack>
+                  </View>
+                </View>
             </Modal>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 22,
+    checkbox: {
+        width: 20,
+        height: 20,
+        marginRight: 10,
+        backgroundColor: '#fff',
+        borderRadius: 0,
+        borderColor: '#08A647',
+        borderWidth: 2,
     },
-    modalView: {
-      margin: 20,
-      backgroundColor: 'white',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-    },
-    textStyle: {
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: 'center',
-      color: '#08A647',
-    },
+    icon: {
+        width: 20,
+        height: 20,
+        color: '#08A647'
+    }
   });
