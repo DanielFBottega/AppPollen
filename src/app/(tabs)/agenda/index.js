@@ -19,7 +19,7 @@ import {
                 eventos.push({
                     date: date,
                     start: '08:00',
-                    end: '12:00',
+                    end: '09:00',
                     title: 'Evento ' + i,
                     description: 'Descrição do evento',
                     location: 'Local do evento',
@@ -30,8 +30,8 @@ import {
                 },
                 {
                     date: date,
-                    start: '14:00',
-                    end: '18:00',
+                    start: '08:00',
+                    end: '10:00',
                     title: 'Evento ' + i + ' parte 2',
                     description: 'Descrição do evento',
                     location: 'Local do evento',
@@ -48,6 +48,7 @@ import {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
+        marginBottom={60}
       >
         {/* inicio cabeçalho */}
         <YStack

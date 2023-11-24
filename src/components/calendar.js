@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import PropTypes from 'prop-types';
-import { YStack, XStack, Text } from 'tamagui';
+import { YStack, XStack, Text, View } from 'tamagui';
 
 LocaleConfig.locales['pt-br'] = {
     monthNames:[
@@ -114,34 +114,58 @@ export default function Calendarstrip({events}) {
                 >
                     Agendas do Dia
                 </Text>
-                {events.length > 0 ? events.map((event) => {
-                    if(event.date === selected){
-
-                        return (
-                            <XStack
-                                key={event.title + event.date}
-                                marginTop={10}
-                                padding={10}
-                                justifyContent='space-between'
-                                borderRadius={10}
-                                backgroundColor={'#FFF'}
-                            >
-                                <Text
-                                    fontFamily={'InterBold'}
-                                    fontSize={16}
-                                >
-                                    {event.title}
-                                </Text>
-                                <Text
-                                    fontFamily={'InterThin'}
-                                    fontSize={16}
-                                >
-                                    {event.start} às {event.end}
-                                </Text>
-                            </XStack>
-                        )
-                    }
-                }) : <Text>Sem informação de Eventos</Text>} 
+                {
+                    //eventsbyHour tem as categorias de horas e os eventos que pertencem a cada categoria, mostre os eventos em cada categoria se a data selecionada for a mesma do evento, a categoria deve ser um titulo com estilo de risco horizontal e no meio da linha tenha o horario no formato 00h
+                    eventsByHour.map((hour) => {
+                        //se tiver evento na categoria, verifica se a data selecionada é a mesma do evento, se for mostre o evento
+                        if(hour.events.length > 0){
+                            if(hour.events[0].date === selected){
+                                return (
+                                    <YStack
+                                        key={hour.hour}
+                                        marginTop={10}
+                                    >
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                          <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+                                          <View>
+                                            <Text style={{width: 50, textAlign: 'center'}}>{hour.hour}hrs</Text>
+                                          </View>
+                                          <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+                                        </View>
+                                        {
+                                            hour.events.map((event) => {
+                                                if(event.date === selected){
+                                                    return (
+                                                        <XStack
+                                                            key={event.title}
+                                                            marginTop={10}
+                                                            padding={15}
+                                                            backgroundColor='#fff'
+                                                            borderRadius={10}
+                                                            justifyContent='space-between'
+                                                        >
+                                                            <Text
+                                                                fontSize={16}
+                                                            >
+                                                                {event.title}
+                                                            </Text>
+                                                            <Text
+                                                                fontSize={14}
+                                                                alignSelf='center'
+                                                            >
+                                                                {event.start} - {event.end}
+                                                            </Text>
+                                                        </XStack>
+                                                    )
+                                                }
+                                            })
+                                        }
+                                    </YStack>
+                                )
+                            }
+                        }
+                    })
+                }
 
             </YStack>
         </YStack>

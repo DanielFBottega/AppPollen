@@ -2,19 +2,13 @@ import {
   XStack,
   YStack,
   Text,
-  Image,
-  Avatar,
-  View,
   ScrollView,
-  Anchor
 } from 'tamagui';
 import { Plus} from '@tamagui/lucide-icons'
-import * as Linking from 'expo-linking';
 import { GradientBackground } from '@components/Themed';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
-import LateralMenu from '@components/lateralMenu.js';
-
+import ModalReuniao from '@components/modalReuniao';
 
 export default function Reuniao() {
   const [events, setEvents] = useState([])
@@ -95,11 +89,7 @@ export default function Reuniao() {
                 marginRight: 10
               }}
             >
-            <Plus
-              color='#fff'
-              borderRadius={5}
-              size={30}
-            />
+              <ModalReuniao />
             </GradientBackground>
           </YStack>
         </XStack>
