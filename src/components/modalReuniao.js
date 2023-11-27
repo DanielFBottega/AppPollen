@@ -12,10 +12,13 @@ import {
     Select,
     Adapt,
     Sheet,
+    Label,
   } from 'tamagui'
+  import DateTimePicker from '@react-native-community/datetimepicker';
   import { LinearGradient } from 'tamagui/linear-gradient'
   import { Plus, Check, X, ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
   import {Modal} from 'react-native'
+  import moment from 'moment';
 
 export default function ModalReuniao() {
     const [open, setOpen] = useState(false)
@@ -57,12 +60,12 @@ export default function ModalReuniao() {
         },
     ])
     const [selectedSala, setSelectedSala] = useState('')
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState(new Date())
+    const [datepicker, setDatePicker] = useState(false)
     const [start, setStart] = useState('')
     const [end, setEnd] = useState('')
     const [descricao, setDescricao] = useState('')
     const [error, setError] = useState('')
-
 
     return(
         <View>
@@ -79,20 +82,17 @@ export default function ModalReuniao() {
                 animationType='slide'
                 transparent={true}
                 onRequestClose={() => setOpen(false)}
-
             >
             <View
                 f={1}
                 justifyContent='center'
                 alignItems='center'
                 backgroundColor={'rgba(0,0,0,0.3)'}
-
             >
                 <Form
                     backgroundColor={'#fff'}
                     padding={10}
                     borderRadius={10}
-
                 >
                     <XStack
                         width={200}
@@ -118,16 +118,22 @@ export default function ModalReuniao() {
                             />
                         </Button>
                     </XStack>
-                    <YStack>
+                    <YStack
+                      gap={15}
+                    >
                         {/* SELECT */}
+                        <Label
+                          htmlFor='empresa'
+                          marginBottom={-15}
+                        >Empresa</Label>
                         <Select
-                          id="food"
+                          id="empresa"
                           value={selectedEmpresa}
                           onValueChange={(value) => setSelectedEmpresa(value)}
                           disablePreventBodyScroll
                         >
-                          <Select.Trigger width={220} iconAfter={ChevronDown}>
-                            <Select.Value placeholder="Something" />
+                          <Select.Trigger iconAfter={ChevronDown}                          >
+                            <Select.Value placeholder="Empresas"/>
                           </Select.Trigger>
                           <Adapt when="sm" platform="touch">
                             <Sheet
@@ -152,7 +158,7 @@ export default function ModalReuniao() {
                               />
                             </Sheet>
                           </Adapt>
-                          <Select.Content zIndex={200000}>
+                          <Select.Content>
                             <Select.ScrollUpButton
                               alignItems="center"
                               justifyContent="center"
@@ -223,10 +229,22 @@ export default function ModalReuniao() {
                           </Select.Content>
                         </Select>
                         {/* DATEPICKER */}
-                        <Input
-                            placeholder='Data'
-                            value={date}
-                            onChangeText={setDate}
+                        {/* input para colocar a data com mascara e icone no lado para abrir datepicker */}
+                        <Button 
+                            onPress={() => setDatePicker(true)}
+                        >
+                          a
+                        </Button>
+                        <DateTimePicker
+                          id="date"
+                          mode="date"
+                          display="default"
+                          value={date}
+                          onChange={(event, selectedDate) => {
+                            const currentDate = selectedDate || date;
+                            setDate(currentDate);
+                            setDatePicker(false)
+                          }}
                         />
                         {/* TIMEPICKER */}
                         <Input

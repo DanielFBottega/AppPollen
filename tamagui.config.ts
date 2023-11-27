@@ -2,7 +2,7 @@ import { createAnimations } from "@tamagui/animations-react-native";
 import { createInterFont } from "@tamagui/font-inter";
 import { createMedia } from "@tamagui/react-native-media-driver";
 import { shorthands } from "@tamagui/shorthands";
-import { themes, tokens } from "@tamagui/themes";
+import { themes as tamaguiThemes, tokens } from "@tamagui/themes";
 import { createTamagui } from "tamagui";
 
 const animations = createAnimations({
@@ -38,7 +38,6 @@ const config = createTamagui({
     heading: headingFont,
     body: bodyFont
   },
-  themes,
   tokens,
   media: createMedia({
     xs: { maxWidth: 660 },
@@ -55,7 +54,17 @@ const config = createTamagui({
     tall: { minHeight: 820 },
     hoverNone: { hover: "none" },
     pointerCoarse: { pointer: "coarse" }
-  })
+  }),
+  themes: {
+    light: {
+      ...tamaguiThemes.light,
+      colors: {
+        primary: "#08A647",
+        secondary: "#ACCF80",
+        background: "#fff",
+      }
+    }as any,
+  }
 });
 
 export type AppConfig = typeof config;

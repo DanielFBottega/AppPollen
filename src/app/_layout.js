@@ -1,6 +1,5 @@
 import { Suspense, useEffect } from "react";
 import {
-  DefaultTheme,
   ThemeProvider
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -28,10 +27,21 @@ export default function Layout() {
   return (
     <TamaguiProvider config={config}>
       <Suspense fallback={<Text>Loading...</Text>}>
-        <Theme name={'light'}
+        <Theme name={'light'} defaultTheme={'light'}
         >
           <ThemeProvider
-            value={DefaultTheme}
+            value={{
+              colors: {
+                primary: '#08A647',
+                secondary: '#ACCF80',
+                background: '#F2F2F2',
+                backgroundInverted: '#fff',
+                text: '#2D2D2D',
+                textInverted: '#F2F2F2',
+                //background de input/select
+                surface: '#FFFFFF',
+            }}
+          }
           >
             <Stack
               screenOptions={{

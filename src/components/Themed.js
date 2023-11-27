@@ -9,7 +9,7 @@ import {
   styled,
   useTheme,
   withStaticProperties,
-} from '@tamagui/web'
+} from 'tamagui'
 
 
 const colors = {

@@ -205,9 +205,11 @@ export default function Reuniao() {
           fontSize={20}
         >Hoje - {moment().format('DD/MM')}</Text>
         <ScrollView
+          
           showsVerticalScrollIndicator={false}
-          maxHeight={260}
-          marginTop={10}
+          style={{
+            maxHeight: 100,
+          }}
         >
         {
           // separar por sala de reuniao cada uma com seu GradientBackground

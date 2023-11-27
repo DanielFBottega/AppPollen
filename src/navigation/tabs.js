@@ -10,6 +10,7 @@ export default function TabNav() {
           tabBarStyle: {
             // tabbar solta do rodapé
             position: 'absolute',
+            backgroundColor: '#fff',
             bottom: 10,
             left: 20,
             right: 20,

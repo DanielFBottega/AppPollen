@@ -66,13 +66,18 @@ export default function Login() {
           </Form.Trigger>
         </Form>
       </SafeAreaView>
+      <View
+      style={{
+        justifyContent: 'center',
+        alignSelf: 'center',
+        position: 'fixed',
+        bottom: 20,
+      }}
+      >
       <Text
-      alignItems='center'
-      alignSelf='center'
       color="black"
-      position='fixed'
-      bottom={20}
       >Ainda não tem uma conta? <Text color='#08A647'>Cadastre-se</Text></Text>
+      </View>
       <StatusBar style="auto" />
     </View>
   );
