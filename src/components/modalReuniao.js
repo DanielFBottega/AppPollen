@@ -14,11 +14,10 @@ import {
     Sheet,
     Label,
   } from 'tamagui'
-  import DateTimePicker from '@react-native-community/datetimepicker';
-  import { LinearGradient } from 'tamagui/linear-gradient'
-  import { Plus, Check, X, ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
-  import {Modal} from 'react-native'
-  import moment from 'moment';
+import { LinearGradient } from 'tamagui/linear-gradient'
+import DatePicker from "expo-datepicker";
+import { Plus, Check, X, ChevronDown, ChevronUp, Calendar } from '@tamagui/lucide-icons'
+import {Modal} from 'react-native'
 
 export default function ModalReuniao() {
     const [open, setOpen] = useState(false)
@@ -60,7 +59,7 @@ export default function ModalReuniao() {
         },
     ])
     const [selectedSala, setSelectedSala] = useState('')
-    const [date, setDate] = useState(new Date())
+    const [date, setDate] = useState(new Date().toString())
     const [datepicker, setDatePicker] = useState(false)
     const [start, setStart] = useState('')
     const [end, setEnd] = useState('')
@@ -95,8 +94,9 @@ export default function ModalReuniao() {
                     borderRadius={10}
                 >
                     <XStack
-                        width={200}
+                        width={230}
                         marginBottom={20}
+                        justifyContent='space-between'
                     >
                         <Text
                             color={'black'}
@@ -230,35 +230,150 @@ export default function ModalReuniao() {
                         </Select>
                         {/* DATEPICKER */}
                         {/* input para colocar a data com mascara e icone no lado para abrir datepicker */}
-                        <Button 
-                            onPress={() => setDatePicker(true)}
-                        >
-                          a
-                        </Button>
-                        <DateTimePicker
-                          id="date"
-                          mode="date"
-                          display="default"
-                          value={date}
-                          onChange={(event, selectedDate) => {
-                            const currentDate = selectedDate || date;
-                            setDate(currentDate);
-                            setDatePicker(false)
-                          }}
+                        <View>
+                        <DatePicker
+                          date={date}
+                          onDateChange={(date) => setDate(date)}
                         />
+                        </View>
                         {/* TIMEPICKER */}
+                        <Label
+                          htmlFor='horario'
+                          marginBottom={-15}
+                        >Horário</Label>
                         <Input
-                            placeholder='Início'
+                            id='horario'
+                            placeholder='Horário'
                             value={start}
                             onChangeText={setStart}
                         />
-                        {/* TIMEPICKER */}
-                        <Input
-                            placeholder='Fim'
-                            value={end}
-                            onChangeText={setEnd}
+                        {/* select da SALA */}
+                        <Label
+                          htmlFor='sala'
+                          marginBottom={-15}
+                        >Sala</Label>
+                        <Select
+                          id="sala"
+                          value={selectedSala}
+                          onValueChange={(value) => setSelectedSala(value)}
+                          disablePreventBodyScroll
+                        >
+                          <Select.Trigger iconAfter={ChevronDown}                          >
+                            <Select.Value placeholder="Salas"/>
+                          </Select.Trigger>
+                          <Adapt when="sm" platform="touch">
+                            <Sheet
+                              modal
+                              dismissOnSnapToBottom
+                              animationConfig={{
+                                type: 'spring',
+                                damping: 20,
+                                mass: 1.2,
+                                stiffness: 250,
+                              }}
+                            >
+                              <Sheet.Frame>
+                                <Sheet.ScrollView>
+                                  <Adapt.Contents />
+                                </Sheet.ScrollView>
+                              </Sheet.Frame>
+                              <Sheet.Overlay
+                                animation="lazy"
+                                enterStyle={{ opacity: 0 }}
+                                exitStyle={{ opacity: 0 }}
+                              />
+                            </Sheet>
+                          </Adapt>
+                          <Select.Content>
+                            <Select.ScrollUpButton
+                              alignItems="center"
+                              justifyContent="center"
+                              position="relative"
+                              width="100%"
+                              height="$3"
+                            >
+                              <YStack zIndex={10}>
+                                <ChevronUp size={20} />
+                              </YStack>
+                              <LinearGradient
+                                start={[0, 0]}
+                                end={[0, 1]}
+                                fullscreen
+                                colors={['$background', 'transparent']}
+                                borderRadius="$4"
+                              />
+                            </Select.ScrollUpButton>
+                            <Select.Viewport
+                              // to do animations:
+                              // animation="quick"
+                              // animateOnly={['transform', 'opacity']}
+                              // enterStyle={{ o: 0, y: -10 }}
+                              // exitStyle={{ o: 0, y: 10 }}
+                              minWidth={200}
+                            >
+                              <Select.Group>
+                                <Select.Label>Sala</Select.Label>
+                                {/* for longer lists memoizing these is useful */}
+                                {
+                                    salas.map((item, i) => {
+                                      return (
+                                        <Select.Item
+                                          debug="verbose"
+                                          index={i}
+                                          key={item.value}
+                                          value={item.value}
+                                        >
+                                          <Select.ItemText>{item.label}</Select.ItemText>
+                                          <Select.ItemIndicator marginLeft="auto">
+                                            <Check size={16} />
+                                          </Select.ItemIndicator>
+                                        </Select.Item>
+                                      )
+                                    })
+                                  }
+                              </Select.Group>
+                              {/* Native gets an extra icon */}
+                            </Select.Viewport>
+                            <Select.ScrollDownButton
+                              alignItems="center"
+                              justifyContent="center"
+                              position="relative"
+                              width="100%"
+                              height="$3"
+                            >
+                              <YStack zIndex={10}>
+                                <ChevronDown size={20} />
+                              </YStack>
+                              <LinearGradient
+                                start={[0, 0]}
+                                end={[0, 1]}
+                                fullscreen
+                                colors={['transparent', '$background']}
+                                borderRadius="$4"
+                              />
+                            </Select.ScrollDownButton>
+                          </Select.Content>
+                        </Select>
+                        {/* Observações */}
+                        <Label
+                          htmlFor='descricao'
+                          marginBottom={-15}
+                        >Observações</Label>
+                        <TextArea
+                          id='descricao'
+                          placeholder='Observações'
+                          value={descricao}
+                          onChangeText={setDescricao}
                         />
                     </YStack>
+                    <Button
+                        backgroundColor={'#ACCF80'}
+                        borderRadius={10}
+                        marginTop={20}
+                        onPress={() => setOpen(false)}
+                    >
+                        <Text>Confirmar</Text>
+                    </Button>
                 </Form>
             </View>
             </Modal>

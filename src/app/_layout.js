@@ -38,7 +38,6 @@ export default function Layout() {
                 backgroundInverted: '#fff',
                 text: '#2D2D2D',
                 textInverted: '#F2F2F2',
-                //background de input/select
                 surface: '#FFFFFF',
             }}
           }

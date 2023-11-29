@@ -2,6 +2,7 @@ import CalendarStrip from 'react-native-calendar-strip';
 import 'moment'
 import 'moment/locale/pt-br'
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 const locale = {
     name : 'pt-br',
@@ -21,11 +22,9 @@ export default function Calendarstrip({events}) {
                 padding: 15,
                 backgroundColor: 'white',
                 borderRadius: 10,
-
             }}
-            scrollable
-            startingDate={new Date()}
-            selectedDate={new Date()}
+            startingDate={moment().format('YYYY-MM-DD')}
+            //selectedDate={new Date()}
             //bloquear seleção de datas
             showMonth={false}
             showMonthArrow={false}
@@ -43,7 +42,7 @@ export default function Calendarstrip({events}) {
                 borderColor: '#08A647',
             }}
             highlightDateContainerStyle={{
-                backgroundColor: '#08A647',
+                backgroundColor: '#ACCF80',
             }}
             highlightDateNumberStyle={{
                 color: 'white',

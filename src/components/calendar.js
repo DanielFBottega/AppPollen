@@ -76,8 +76,8 @@ export default function Calendarstrip({events}) {
         })
         setEventsByHour(eventsByHour)
     }, [events])
-    console.log(eventsByHour)
-
+    // console.log(eventsByHour)
+    // console.log(selected)
     return (
         <YStack>
             <Calendar
@@ -115,32 +115,34 @@ export default function Calendarstrip({events}) {
                     Agendas do Dia
                 </Text>
                 {
-                    //eventsbyHour tem as categorias de horas e os eventos que pertencem a cada categoria, mostre os eventos em cada categoria se a data selecionada for a mesma do evento, a categoria deve ser um titulo com estilo de risco horizontal e no meio da linha tenha o horario no formato 00h
-                    eventsByHour.map((hour) => {
-                        //se tiver evento na categoria, verifica se a data selecionada é a mesma do evento, se for mostre o evento
+                    eventsByHour.map((hour, index) => {
                         if(hour.events.length > 0){
-                            if(hour.events[0].date === selected){
-                                return (
+                            //se tem a data selecionada em algum evento da hora
+                            if(hour.events.some((event) => event.date === selected)){
+                                return(
                                     <YStack
-                                        key={hour.hour}
-                                        marginTop={10}
+                                        key={(index + 1)}
                                     >
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                          <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
-                                          <View>
-                                            <Text style={{width: 50, textAlign: 'center'}}>{hour.hour}hrs</Text>
-                                          </View>
-                                          <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+                                            <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+                                                <View>
+                                                    <Text style={{width: 50, textAlign: 'center'}}>{hour.hour}hrs</Text>
+                                                </View>
+                                            <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
                                         </View>
+                                        <YStack
+                                            gap={5}
+                                        >
                                         {
-                                            hour.events.map((event) => {
+                                            hour.events.map((event, index) => {
+                                                console.log(event)
                                                 if(event.date === selected){
+                                                    console.log(event)
                                                     return (
                                                         <XStack
-                                                            key={event.title}
-                                                            marginTop={10}
-                                                            padding={15}
-                                                            backgroundColor='#fff'
+                                                            key={index}
+                                                            backgroundColor='#FFF'
+                                                            padding={10}
                                                             borderRadius={10}
                                                             justifyContent='space-between'
                                                         >
@@ -160,6 +162,7 @@ export default function Calendarstrip({events}) {
                                                 }
                                             })
                                         }
+                                        </YStack>
                                     </YStack>
                                 )
                             }
