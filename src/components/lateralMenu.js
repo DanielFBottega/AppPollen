@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import {TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { View, Text, Image, YStack, XStack, Avatar } from 'tamagui';
 import { GradientBackground } from './Themed';
 import { useNavigation } from '@react-navigation/native';
+import ModalConfig from './modalConfig';
+import ModalSac from './modalSac';
 
 const LateralMenu = ({props}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [modalConfig, setModalConfig] = useState(false);
+  const [modalTermos, setModalTermos] = useState(false);
   const navigation = useNavigation();
   const nome = 'Reginaldo Cigarro';
   const empresa = 'MarkHouse';
@@ -22,6 +26,21 @@ const LateralMenu = ({props}) => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const handleOpenConfig = () => {
+    //evitar que fique true quando esta fechando
+    if(modalConfig){
+      return
+    }
+    setModalConfig(true)
+  }
+  const handleOpenTermos = () => {
+    //evitar que fique true quando esta fechando
+    if(modalTermos){
+      return
+    }
+    setModalTermos(true)
+  }
 
   return (
     <View>
@@ -140,13 +159,16 @@ const LateralMenu = ({props}) => {
                 </XStack>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigateTo('configuracao/index')}
+                onPress={() => handleOpenConfig()}
               >
                 <XStack>
-                <Image
-                  src={require('@assets/Settings.svg')}
-                  tintColor='white'
-                />
+                  <Image
+                    src={require('@assets/Settings.svg')}
+                    tintColor='white'
+                  />
+                  {modalConfig && <ModalConfig onClose={()=> {
+                    setModalConfig(false)
+                    }}/>}
                 <Text
                   alignSelf='center'
                   color={'white'}
@@ -156,13 +178,14 @@ const LateralMenu = ({props}) => {
                 </XStack>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigateTo('termos/index')}
+                onPress={() => handleOpenTermos()}
               >
                 <XStack>
                 <Image
-                  src={require('@assets/House.svg')}
+                  src={require('@assets/call_quality.svg')}
                   tintColor='white'
                 />
+                {modalTermos && <ModalSac onClose={()=> { setModalTermos(false) }}/>}
                 <Text
                   alignSelf='center'
                   color={'white'}
@@ -172,11 +195,11 @@ const LateralMenu = ({props}) => {
                 </XStack>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigateTo('/')}
+                onPress={() => navigateTo('app/index')}
               >
                 <XStack>
                 <Image
-                  src={require('@assets/House.svg')}
+                  src={require('@assets/SignOut.svg')}
                   tintColor='white'
                 />
                 <Text
@@ -187,7 +210,6 @@ const LateralMenu = ({props}) => {
                 >Sair</Text>
                 </XStack>
               </TouchableOpacity>
-
               {/* Adicione mais links conforme necessário */}
             </YStack>
             </GradientBackground>

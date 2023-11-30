@@ -2,7 +2,6 @@ import {useState} from 'react';
 import {
     View,
     XStack,
-    Image,
     YStack,
     Text,
     Button,
@@ -16,7 +15,7 @@ import {
   } from 'tamagui'
 import { LinearGradient } from 'tamagui/linear-gradient'
 import DatePicker from "expo-datepicker";
-import { Plus, Check, X, ChevronDown, ChevronUp, Calendar } from '@tamagui/lucide-icons'
+import { Plus, Check, X, ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
 import {Modal} from 'react-native'
 
 export default function ModalReuniao() {
@@ -59,12 +58,9 @@ export default function ModalReuniao() {
         },
     ])
     const [selectedSala, setSelectedSala] = useState('')
-    const [date, setDate] = useState(new Date().toString())
-    const [datepicker, setDatePicker] = useState(false)
+    const [date, setDate] = useState(new Date().toLocaleDateString())
     const [start, setStart] = useState('')
-    const [end, setEnd] = useState('')
     const [descricao, setDescricao] = useState('')
-    const [error, setError] = useState('')
 
     return(
         <View>
@@ -230,12 +226,16 @@ export default function ModalReuniao() {
                         </Select>
                         {/* DATEPICKER */}
                         {/* input para colocar a data com mascara e icone no lado para abrir datepicker */}
-                        <View>
-                        <DatePicker
-                          date={date}
-                          onDateChange={(date) => setDate(date)}
+                        <Label
+                          htmlFor='data'
+                          marginBottom={-15}
+                        >Data</Label>
+                        <Input
+                            id='data'
+                            placeholder='Data'
+                            value={date}
+                            onChangeText={setDate}
                         />
-                        </View>
                         {/* TIMEPICKER */}
                         <Label
                           htmlFor='horario'
